@@ -1,0 +1,26 @@
+{
+    "Nominative": {
+      "Masculine": "der",
+      "Feminine": "die",
+      "Neuter": "das",
+      "Plural": "die"
+    },
+    "Accusative": {
+      "Masculine": "den",
+      "Feminine": "die",
+      "Neuter": "das",
+      "Plural": "die"
+    },
+    "Dative": {
+      "Masculine": "dem",
+      "Feminine": "der",
+      "Neuter": "dem",
+      "Plural": "den"
+    },
+    "Genitive": {
+      "Masculine": "des",
+      "Feminine": "der",
+      "Neuter": "des",
+      "Plural": "der"
+    }
+  }
