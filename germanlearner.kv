@@ -1,0 +1,58 @@
+#:kivy 2.2.1
+#:import isdir os.path.isdir
+#:import np numpy
+
+<MyScreenManager>:
+    MainMenuScreen:
+    QuizzScreen:
+
+<MainMenuScreen>:
+    name: 'main_menu'
+    TableChoice: 
+        id: table_spinner
+        size_hint: 0.6, 0.2 
+        pos_hint: {'x': 0.2, 'y': 0.8}
+        font_size: (self.width ** 2 + self.height ** 2) ** 0.5 * 0.05  # Scale font size with the diagonal
+    Button:
+        text: 'Start Quizz'
+        size_hint: 0.6, 0.1 
+        pos_hint: {'x': 0.2, 'y': 0.05}
+        on_release: app.screen_manager.open_quizz_screen()
+
+Popup:
+    id: warning_popup
+    title: 'Warning'
+    size_hint: (0.6, 0.3)
+    auto_dismiss: True
+    Label:
+        text: 'Please select a table before proceeding.'
+        size_hint: (1, 1)
+            
+<QuizzScreen>
+    name: 'quizz'
+    Button:
+        id: finish_quizz_btn
+        text: 'Finish Quizz'
+        size_hint: 0.6, 0.1 
+        pos_hint: {'x': 0.2, 'top': 0.95}
+        on_release: root.finish_quizz()
+
+    Button:
+        id: submit_answer_btn
+        text: 'Submit Answer'
+        size_hint: 0.6, 0.1
+        pos_hint: {'x': 0.2, 'y': 0.05}
+        on_release: root.check_answer()
+
+    TextInput: 
+        id: answer_input
+        multiline: False
+        size_hint: 0.6, 0.1
+        pos_hint: {'x': 0.2, 'y': 0.3}
+
+    Label:
+        id: question_label
+        text: root.question_text  # Bind text to a property in the Python class
+        size_hint: 1, 0.1
+        pos_hint: {'x': 0.0, 'y': 0.5}
+                                               
