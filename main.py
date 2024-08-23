@@ -4,6 +4,7 @@ import numpy as np
 import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
@@ -16,14 +17,15 @@ from kivy.properties import ObjectProperty, StringProperty
 
 from logic.declension_logic import load_table, TableName, Gender, Case, check_declension
 
-def show_popup(title, message):
-    popup_layout = BoxLayout(orientation = 'vertical', padding = 10)
-    popup_label = Label(text = message)
-    close_button = Button(text = "Close", size_hint = (1, None), height = 50)
+def show_popup(title, message, label_text_y_pos: int = 0.6):
+    popup_layout = FloatLayout(size_hint=(1, 1))
+    popup_label = Label(text = message, pos_hint = {"x": 0.1, "y": label_text_y_pos}, size_hint = (0.8, 0.4), halign = 'center')
+    popup_label.bind(size = lambda s, w: s.setter('text_size')(s, w))
+    close_button = Button(text = "Close", size_hint = (1, None), pos_hint = {"x": 0.0, "y": 0.1}, height = 50)
     popup_layout.add_widget(popup_label)
     popup_layout.add_widget(close_button)
 
-    popup = Popup(title = title, content = popup_layout, size_hint = (None, None), size = (400, 200))
+    popup = Popup(title = title, content = popup_layout, size_hint = (0.4, 0.4),  title_align = 'center')
     close_button.bind(on_press = popup.dismiss)
     popup.open()
 
@@ -154,11 +156,11 @@ class QuizzScreen(Screen):
         is_correct = check_declension(self.table, gender, case, user_answer)
         self.correct_answers.append(is_correct)
         if is_correct:
-            show_popup("Correct", f"Correct! The {case.value} form of the {self.table_name}" 
+            show_popup("Correct", f"Correct!\n The {case.value} form of the {self.table_name}" 
                     + f" for a {gender.value} noun in the {case.value} case is {user_answer}.")
         else:
             correct_answer = self.table.loc[case.value, gender.value]
-            show_popup("Incorrect", f"Incorrect. The correct answer was {correct_answer}.")
+            show_popup("Incorrect", f"Incorrect.\n The correct answer was {correct_answer}.")
 
         self.current_question_index += 1
         #Clear answer field
